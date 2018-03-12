@@ -6,10 +6,13 @@ class PostTest < ActiveSupport::TestCase
 
     @post = Post.create(title: "Test Title", content: "random text",
                      user_id: @user.id)
+    @second_post = Post.create(title: "Test Title 2", content: "random text 2",
+                     user_id: @user.id)    
   end
 
   test "should be vailid" do
     assert @post.valid?
+    assert @second_post.valid?
   end
 
   test "attributes title and content should work" do
@@ -22,5 +25,7 @@ class PostTest < ActiveSupport::TestCase
   test "definately linked to user" do
     assert User.find(@post.user_id).username == "Joe Bloggs"
     assert User.find(@post.user_id).username != "Joe Cloggs"
+    assert User.find(@second_post.user_id).username == "Joe Bloggs"
+    assert Post.find(@user.id).content == "random text"
   end
 end
